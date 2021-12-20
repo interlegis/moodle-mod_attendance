@@ -54,7 +54,7 @@ Feature: Teachers and Students can record session attendance
     And I log out
     And I am on the "Attendance" "mod_attendance > View" page logged in as "teacher1"
     And I follow "Status set"
-    And I set the field with xpath "//*[@id='preferencesform']/table/tbody/tr[3]/td[5]/input" to "0"
+    And I set the field with xpath "//*[@id='preferencesform']/input[@class='studentavailability_E']" to "0"
     And I press "Update"
     And I log out
     And I am on the "Attendance" "mod_attendance > View" page logged in as "student1"
@@ -85,7 +85,7 @@ Feature: Teachers and Students can record session attendance
     And I click on "Send a message" "button"
     And I should see "Message body"
     And I should see "student1@asd.com"
-    And I follow "Course 1"
+    And I am on "Course 1" course homepage
     And I expand "Reports" node
     And I follow "Logs"
     And I click on "Get these logs" "button"

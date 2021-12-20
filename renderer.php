@@ -2669,7 +2669,8 @@ class mod_attendance_renderer extends plugin_renderer_base {
             if ($st->setunmarked) {
                 $checked = ' checked ';
             }
-            $cells[] = $this->construct_text_input('studentavailability['.$st->id.']', 4, 5, $st->studentavailability);
+            $cells[] = $this->construct_text_input('studentavailability['.$st->id.']', 4, 5,
+                $st->studentavailability, 'studentavailability_'.$st->acronym);
             $cells[] = '<input type="radio" name="setunmarked" value="'.$st->id.'"'.$checked.'>';
 
             $cells[] = $this->construct_preferences_actions_icons($st, $prefdata);
@@ -2729,16 +2730,17 @@ class mod_attendance_renderer extends plugin_renderer_base {
      * @param integer $size
      * @param integer $maxlength
      * @param string $value
+     * @param string $extraclass
      * @return string
      */
-    private function construct_text_input($name, $size, $maxlength, $value='') {
+    private function construct_text_input($name, $size, $maxlength, $value='', $extraclass='') {
         $attributes = array(
                 'type'      => 'text',
                 'name'      => $name,
                 'size'      => $size,
                 'maxlength' => $maxlength,
                 'value'     => $value,
-                'class' => 'form-control');
+                'class' => 'form-control '.$extraclass);
         return html_writer::empty_tag('input', $attributes);
     }
 
