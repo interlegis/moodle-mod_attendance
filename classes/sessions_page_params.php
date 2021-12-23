@@ -61,6 +61,9 @@ class mod_attendance_sessions_page_params {
      */
     const ACTION_DELETE_HIDDEN     = 6;
 
+
+    const ACTION_ILB_SYNC     = 90;
+
     /** @var int view mode of taking attendance page*/
     public $action;
 }

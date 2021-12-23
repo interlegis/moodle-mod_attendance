@@ -31,6 +31,7 @@ $id                         = required_param('id', PARAM_INT);
 $from                       = optional_param('from', null, PARAM_ALPHANUMEXT);
 $pageparams->view           = optional_param('view', null, PARAM_INT);
 $pageparams->curdate        = optional_param('curdate', null, PARAM_INT);
+$ilbsync                    = optional_param('ilbsync', null, PARAM_ALPHANUMEXT);
 $pageparams->perpage        = get_config('attendance', 'resultsperpage');
 
 $cm             = get_coursemodule_from_id('attendance', $id, 0, false, MUST_EXIST);
@@ -70,13 +71,17 @@ if ($from === 'block') {
         $att->view = ATT_VIEW_DAYS;
     }
 }
-
+    
 $PAGE->set_url($att->url_manage());
 $PAGE->set_title($course->shortname. ": ".$att->name);
 $PAGE->set_heading($course->fullname);
 $PAGE->set_cacheable(true);
 $PAGE->force_settings_menu(true);
 $PAGE->navbar->add($att->name);
+
+if($ilbsync) {
+    echo html_writer::tag('p', 'ILB SYNC foi chamado',    array());
+}
 
 $output = $PAGE->get_renderer('mod_attendance');
 $tabs = new attendance_tabs($att, attendance_tabs::TAB_SESSIONS);
@@ -96,5 +101,18 @@ echo $output->render($tabs);
 echo $output->render($filtercontrols);
 echo $output->render($sesstable);
 
-echo $output->footer();
+echo html_writer::start_div();
+echo html_writer::start_tag('form', array());
+echo html_writer::tag('input', '', array('type' => 'hidden', 'name' => 'id', 'value' => $id));
 
+echo html_writer::tag('input', '', 
+    array(
+        'type'=>'submit', 
+        'value' => 'Sincronizar frequências', 
+        'name' => 'ilbsync'
+    ));
+echo html_writer::end_tag('form');
+echo html_writer::end_div();
+
+
+echo $output->footer();
